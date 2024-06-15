@@ -11,14 +11,32 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 public class backupMC {
+
+    /*
 
     private static final String SAVE_DIR = "E:\\Games\\minecrafts\\GregTech6\\.minecraft\\saves\\NEI"; // 示例存档目录路径
     private static final String BACKUP_DIR = "E:\\Games\\minecrafts\\GregTech6\\.minecraft\\backups"; // 示例备份目录路径
 
+    */
+    public static String SAVE_DIR;
+    public static String BACKUP_DIR;
     public static void main(String[] args) {
+
+        Config config = ConfigFactory.load();
+        SAVE_DIR = config.getString("save-directory");
+        BACKUP_DIR = config.getString("backup-directory");
+
+        if (SAVE_DIR != null && BACKUP_DIR != null) {
+            // 使用从配置文件中读取的路径进行备份操作
+            // 例如: backupSavesFull(saveDir, backupDir);
+        } else {
+            System.err.println("Error: 'save-directory' and 'backup-directory' must be set in the configuration.");
+        }
+
         // 获取当前时间并格式化为字符串
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss"));
 
